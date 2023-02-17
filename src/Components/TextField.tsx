@@ -37,14 +37,14 @@ export const TextField: FC<TextProps> = (props: TextProps) => {
           type={"text"}
           placeholder={props.text}
           style={{ textAlign: textAlign, fontSize: fontSize }}
-          className="group-hover:ring-1 group-hover:ring-red-400 font-bold font-sans"
+          className="ring-1 ring-red-400 font-bold font-sans"
         />
         <div className="flex justify-between">
-          <div className="invisible relative text-xl group-hover:flex space-x-2 group-hover:visible">
+          <div className="relative text-xl group-hover:flex space-x-2 group-hover:visible">
             <span onClick={() => setFontSize(fontSize + 1)}>+</span>
             <span onClick={() => setFontSize(fontSize - 1)}>-</span>
           </div>
-          <div className="invisible relative group-hover:flex space-x-2 text-xl group-hover:visible">
+          <div className="relative flex space-x-2 text-xl group-hover:visible">
             <span onClick={() => setTextAlign("left")}>
               <TextAlignLeft />
             </span>
