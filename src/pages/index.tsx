@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Element from "@/Components/Element";
+import { Element } from "@/Components/Element";
 
 export default function Home() {
   return (
@@ -12,7 +12,10 @@ export default function Home() {
       </Head>
 
       <main className="mx-auto border-2 border-red-400 relative h-screen w-[50%] p-0">
-        <Element />
+        <Element name="a" />
+        <Element name="1" />
+        <Element name="asdf" />
+        <Element name="ola" />
       </main>
     </>
   );
