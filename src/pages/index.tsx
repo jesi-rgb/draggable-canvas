@@ -2,59 +2,11 @@ import Head from "next/head";
 import { Effect } from "@/Components/Effect";
 import { TextField } from "@/Components/TextField";
 import { useEffect, useState } from "react";
+import useDnD from "@/hooks/useDnD";
 
 export default function Home() {
-  const [lastTarget, setLastTarget] = useState<EventTarget | null>(null);
-  function hideWrapper() {
-    let element = document.querySelector("#wrapper") as HTMLElement;
-    if (element) {
-      element.style.visibility = "hidden";
-      element.style.opacity = "0";
-    }
-  }
-
-  function showWrapper() {
-    let element = document.querySelector("#wrapper") as HTMLElement;
-    if (element) {
-      element.style.visibility = "";
-      element.style.opacity = "0.5";
-    }
-  }
-
-  useEffect(() => {
-    window.addEventListener("dragenter", function (e) {
-      // drag start
-      // unhide our red overlay
-      showWrapper();
-      setLastTarget(e.target);
-    });
-
-    window.addEventListener("dragleave", function (e) {
-      // user canceled
-
-      if (e.target === lastTarget || e.target === document) {
-        hideWrapper();
-      }
-    });
-
-    window.addEventListener("dragover", function (e) {
-      //to stop default browser act
-      e.preventDefault();
-    });
-
-    window.addEventListener("drop", function (e) {
-      e.preventDefault();
-      hideWrapper();
-      e.stopImmediatePropagation();
-
-      // // if drop, we pass object file to dropzone
-      console.log("dropped to dropzone or whatever");
-      console.log(e.dataTransfer?.items);
-      // var myDropzone = Dropzone.forElement(".dropzone");
-      // myDropzone.handleFiles(e.dataTransfer.files);
-    });
-  });
-
+  let files = useDnD();
+  console.log(files);
   return (
     <>
       <Head>
