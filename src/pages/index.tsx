@@ -1,8 +1,60 @@
 import Head from "next/head";
 import { Effect } from "@/Components/Effect";
 import { TextField } from "@/Components/TextField";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [lastTarget, setLastTarget] = useState<EventTarget | null>(null);
+  function hideWrapper() {
+    let element = document.querySelector("#wrapper") as HTMLElement;
+    if (element) {
+      element.style.visibility = "hidden";
+      element.style.opacity = "0";
+    }
+  }
+
+  function showWrapper() {
+    let element = document.querySelector("#wrapper") as HTMLElement;
+    if (element) {
+      element.style.visibility = "";
+      element.style.opacity = "0.5";
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener("dragenter", function (e) {
+      // drag start
+      // unhide our red overlay
+      showWrapper();
+      setLastTarget(e.target);
+    });
+
+    window.addEventListener("dragleave", function (e) {
+      // user canceled
+
+      if (e.target === lastTarget || e.target === document) {
+        hideWrapper();
+      }
+    });
+
+    window.addEventListener("dragover", function (e) {
+      //to stop default browser act
+      e.preventDefault();
+    });
+
+    window.addEventListener("drop", function (e) {
+      e.preventDefault();
+      hideWrapper();
+      e.stopImmediatePropagation();
+
+      // // if drop, we pass object file to dropzone
+      console.log("dropped to dropzone or whatever");
+      console.log(e.dataTransfer?.items);
+      // var myDropzone = Dropzone.forElement(".dropzone");
+      // myDropzone.handleFiles(e.dataTransfer.files);
+    });
+  });
+
   return (
     <>
       <Head>
@@ -13,6 +65,27 @@ export default function Home() {
       </Head>
 
       {/* main canvas */}
+      <div
+        id="wrapper"
+        style={{
+          position: "absolute",
+          width: "100%",
+          height: "100%",
+          alignContent: "center",
+          verticalAlign: "center",
+          flexGrow: "1",
+          lineHeight: "100vh",
+          opacity: 0,
+          visibility: "hidden",
+          background: "#123",
+          color: "white",
+          fontSize: "100px",
+          textAlign: "center",
+        }}
+      >
+        DROP HERE
+      </div>
+
       <main className="mx-auto border-2 border-red-400 relative h-screen w-[50%] p-0">
         <TextField text="test" />
         <Effect name="Motion" />
