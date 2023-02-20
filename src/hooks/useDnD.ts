@@ -12,7 +12,7 @@ function showWrapper() {
   let element = document.querySelector("#wrapper") as HTMLElement;
   if (element) {
     element.style.visibility = "";
-    element.style.opacity = "0.5";
+    element.style.opacity = "0.2";
   }
 }
 export default function useDnD() {

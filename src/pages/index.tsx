@@ -1,12 +1,13 @@
 import Head from "next/head";
-import { Effect } from "@/Components/Effect";
-import { TextField } from "@/Components/TextField";
-import { useEffect, useState } from "react";
 import useDnD from "@/hooks/useDnD";
+import { FC, ReactNode, useState } from "react";
+import { Effect } from "@/Components/Effect";
 
 export default function Home() {
   let files = useDnD();
   console.log(files);
+
+  let [itemArray, setItemArray] = useState<Array<ReactNode>>([]);
   return (
     <>
       <Head>
@@ -25,23 +26,32 @@ export default function Home() {
           height: "100%",
           alignContent: "center",
           verticalAlign: "center",
-          flexGrow: "1",
           lineHeight: "100vh",
           opacity: 0,
           visibility: "hidden",
-          background: "#123",
+          background: "#F87171",
           color: "white",
+          fontFamily: "cursive",
           fontSize: "100px",
           textAlign: "center",
         }}
       >
-        DROP HERE
+        drop here~
       </div>
 
-      <main className="mx-auto border-2 border-red-400 relative h-screen w-[50%] p-0">
-        <TextField text="test" />
-        <Effect name="Motion" />
-        <Effect name="Glass" />
+      <button
+        onClick={() =>
+          setItemArray([
+            ...itemArray,
+            <Effect key={itemArray.length} name="new" />,
+          ])
+        }
+        className="text-5xl m-10 font-bold absolute"
+      >
+        +
+      </button>
+      <main className="mx-auto border-2 border-red-400 relative h-screen w-[80%] p-0">
+        {itemArray.map((fc, i) => fc)}
       </main>
     </>
   );
