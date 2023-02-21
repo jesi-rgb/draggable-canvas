@@ -10,6 +10,7 @@ export const Effect: FC<EffectProps> = (props: EffectProps) => {
   const [gridSpacing, setGridSpacing] = useState<number>(1);
   const [cursor, setCursor] = useState<"grab" | "grabbing">("grab");
   const [editable, setEditable] = useState<boolean>(false);
+
   const handleDrag = (e: DraggableEvent) => {
     if (e.shiftKey) {
       setGridSpacing(40);
@@ -20,21 +21,20 @@ export const Effect: FC<EffectProps> = (props: EffectProps) => {
 
   const handleMouseDown = (e: MouseEvent) => {
     // e.stopImmediatePropagation();
-    console.log("mousedown");
     setEditable(false);
   };
 
   const handleDblClick = (e: MouseEvent) => {
     console.log(e);
-    // e.stopImmediatePropagation();
     setEditable(true);
+    const element = e.target as HTMLElement;
+    element.focus();
   };
 
   const handleKeyDownExit = (e: KeyboardEvent) => {
-    console.log("keydown");
     if (e.key === "Enter" || e.key === "Escape") {
-      //   e.stopImmediatePropagation();
-      setEditable(true);
+      console.log("keydown");
+      setEditable(false);
     }
   };
 
@@ -49,9 +49,9 @@ export const Effect: FC<EffectProps> = (props: EffectProps) => {
     >
       <div
         suppressContentEditableWarning={true}
-        onMouseDown={(e) => handleMouseDown(e)}
-        onDoubleClick={(e) => handleDblClick(e)}
-        onKeyDown={(e) => handleKeyDownExit(e)}
+        onMouseDown={(e) => handleMouseDown(e as any as MouseEvent)}
+        onDoubleClick={(e) => handleDblClick(e as any as MouseEvent)}
+        onKeyDown={(e) => handleKeyDownExit(e as any as KeyboardEvent)}
         contentEditable={editable}
         style={{ cursor: cursor }}
         className="p-3 border-red-400 bg-red-100 border-2 text-center w-min rounded-xl font-bold font-mono"

@@ -16,8 +16,10 @@ function showWrapper() {
   }
 }
 export default function useDnD() {
+  console.log("mierdon");
   const [lastTarget, setLastTarget] = useState<EventTarget | null>(null);
-  const [items, setItems] = useState<DataTransferItemList>();
+  let [items, setItems] = useState<string>();
+
   useEffect(() => {
     window.addEventListener("dragenter", function (e) {
       // drag start
@@ -40,15 +42,23 @@ export default function useDnD() {
       e.stopImmediatePropagation();
     });
 
-    window.addEventListener("drop", function (e) {
+    window.addEventListener("drop", async function (e) {
       e.preventDefault();
       e.stopImmediatePropagation();
       hideWrapper();
 
-      // // if drop, we pass object file to dropzone
-      console.log("got files from hook");
-      setItems(e.dataTransfer?.items);
+      let file = e.dataTransfer?.files[0];
+      let reader = new FileReader();
+      // it's onload event and you forgot (parameters)
+      reader.onload = function (e) {
+        // the result image data
+        setItems(e.target?.result as string);
+        console.log(items);
+      };
+      // you have to declare the file loading
+      if (file) reader.readAsDataURL(file as Blob);
     });
   });
+
   return items;
 }

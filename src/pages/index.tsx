@@ -1,13 +1,14 @@
 import Head from "next/head";
 import useDnD from "@/hooks/useDnD";
-import { FC, ReactNode, useState } from "react";
-import { Effect } from "@/Components/Effect";
+import { FC, ReactNode, useEffect, useState } from "react";
+import { Effect } from "@/Components/Items/Effect";
+import { ImageItem } from "@/Components/Items/ImageItem";
 
 export default function Home() {
   let files = useDnD();
-  console.log(files);
 
   let [itemArray, setItemArray] = useState<Array<ReactNode>>([]);
+
   return (
     <>
       <Head>
@@ -17,7 +18,6 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* main canvas */}
       <div
         id="wrapper"
         style={{
@@ -43,15 +43,32 @@ export default function Home() {
         onClick={() =>
           setItemArray([
             ...itemArray,
-            <Effect key={itemArray.length} name="new" />,
+            <Effect
+              key={itemArray.length.toString()}
+              name={"item " + (itemArray.length + 1)}
+            />,
           ])
         }
         className="text-5xl m-10 font-bold absolute"
       >
         +
       </button>
-      <main className="mx-auto border-2 border-red-400 relative h-screen w-[80%] p-0">
-        {itemArray.map((fc, i) => fc)}
+
+      {/* main canvas */}
+      <main
+        onDrop={(e) => {
+          setItemArray([
+            ...itemArray,
+            <ImageItem
+              key={itemArray.length.toString()}
+              imageUrl={files ?? ""}
+            />,
+          ]);
+          console.log(itemArray);
+        }}
+        className="mx-auto border-2 border-red-400 relative h-screen w-[80%] p-0"
+      >
+        {itemArray.map((fc) => fc)}
       </main>
     </>
   );
