@@ -21,14 +21,14 @@ export default function useDnD() {
   let [items, setItems] = useState<string>();
 
   useEffect(() => {
-    window.addEventListener("dragenter", function (e) {
+    window.addEventListener("dragenter", function(e) {
       // drag start
       // unhide our red overlay
       showWrapper();
       setLastTarget(e.target);
     });
 
-    window.addEventListener("dragleave", function (e) {
+    window.addEventListener("dragleave", function(e) {
       // user canceled
 
       if (e.target === lastTarget || e.target === document) {
@@ -36,13 +36,13 @@ export default function useDnD() {
       }
     });
 
-    window.addEventListener("dragover", function (e) {
+    window.addEventListener("dragover", function(e) {
       //to stop default browser act
       e.preventDefault();
       e.stopImmediatePropagation();
     });
 
-    window.addEventListener("drop", async function (e) {
+    window.addEventListener("drop", async function(e) {
       e.preventDefault();
       e.stopImmediatePropagation();
       hideWrapper();
@@ -50,7 +50,7 @@ export default function useDnD() {
       let file = e.dataTransfer?.files[0];
       let reader = new FileReader();
       // it's onload event and you forgot (parameters)
-      reader.onload = function (e) {
+      reader.onload = function(e) {
         // the result image data
         setItems(e.target?.result as string);
         console.log(items);

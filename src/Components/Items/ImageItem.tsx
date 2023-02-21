@@ -27,13 +27,13 @@ export const ImageItem: FC<ImageProps> = (props: ImageProps) => {
       onStop={() => setCursor("grab")}
       defaultPosition={{ x: 10, y: 10 }}
     >
-      <div>
+      <div className="w-fit h-fit">
         <Image
-          decoding="sync"
-          width={100}
-          height={100}
+          width={200}
+          height={200}
           src={props.imageUrl}
           alt=""
+          draggable={false}
         />
       </div>
     </Draggable>

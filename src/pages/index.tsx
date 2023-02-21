@@ -62,7 +62,7 @@ export default function Home() {
             <ImageItem
               key={itemArray.length.toString()}
               imageUrl={files ?? ""}
-            />,
+            />
           ]);
           console.log(itemArray);
         }}

@@ -1,4 +1,3 @@
-import { HandEye } from "phosphor-react";
 import { FC, useEffect, useState } from "react";
 import Draggable, { DraggableEvent } from "react-draggable";
 
