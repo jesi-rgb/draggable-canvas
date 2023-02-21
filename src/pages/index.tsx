@@ -57,18 +57,17 @@ export default function Home() {
       {/* main canvas */}
       <main
         onDrop={(e) => {
-          setItemArray([
-            ...itemArray,
-            <ImageItem
-              key={itemArray.length.toString()}
-              imageUrl={files ?? ""}
-            />
-          ]);
+          if (files) {
+            setItemArray([
+              ...itemArray,
+              <ImageItem {...files} key={itemArray.length.toString()} />,
+            ]);
+          }
           console.log(itemArray);
         }}
-        className="mx-auto border-2 border-red-400 relative h-screen w-[80%] p-0"
+        className="mx-auto border-2 border-red-400 relative h-screen xl:w-[80%] p-0"
       >
-        {itemArray.map((fc) => fc)}
+        {itemArray.map((fc, i) => fc)}
       </main>
     </>
   );

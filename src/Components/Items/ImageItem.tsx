@@ -2,11 +2,9 @@ import Image from "next/image";
 import { FC, useState } from "react";
 import Draggable, { DraggableEvent } from "react-draggable";
 
-type ImageProps = {
-  imageUrl: string;
-};
+import { ImportedImage, Item } from "@/types/Items";
 
-export const ImageItem: FC<ImageProps> = (props: ImageProps) => {
+export const ImageItem: FC<ImportedImage> = (props: ImportedImage) => {
   const [cursor, setCursor] = useState<"grab" | "grabbing">("grab");
 
   const [gridSpacing, setGridSpacing] = useState<number>(1);
@@ -25,13 +23,14 @@ export const ImageItem: FC<ImageProps> = (props: ImageProps) => {
       onDrag={(e: DraggableEvent) => handleDrag(e)}
       onStart={() => setCursor("grabbing")}
       onStop={() => setCursor("grab")}
-      defaultPosition={{ x: 10, y: 10 }}
+      defaultPosition={props.dropPosition}
     >
       <div className="w-fit h-fit">
         <Image
+          decoding="sync"
           width={200}
           height={200}
-          src={props.imageUrl}
+          src={props.imgData}
           alt=""
           draggable={false}
         />
